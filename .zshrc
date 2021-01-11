@@ -1,0 +1,1 @@
+/Users/rijkvanzanten/.zshrc
