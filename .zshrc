@@ -7,8 +7,8 @@ setopt PROMPT_SUBST
 function git_prompt() {
     ! git rev-parse --is-inside-work-tree > /dev/null 2>&1 && return
 
-    local UNTRACKED="%F{red}•%f"
-    local MODIFIED="%F{yellow}•%f"
+    local UNTRACKED="%F{yellow}•%f"
+    local MODIFIED="%F{blue}•%f"
     local STAGED="%F{green}•%f"
 
     local -a FLAGS
@@ -88,6 +88,12 @@ function ggp() {
 }
 compdef _git ggp=git-checkout
 
+function ggu() {
+  [[ "$#" != 1 ]] && local b="$(git_current_branch)"
+  git pull --rebase origin "${b:=$1}"
+}
+compdef _git ggu=git-checkout
+
 alias gst="git status"
 alias ga="git add"
 alias gc="git commit -v"
@@ -99,3 +105,6 @@ alias groh='git reset origin/$(git_current_branch) --hard'
 alias gp="git push"
 alias gl="git pull"
 alias gb="git branch"
+alias gcmsg="git commit -m"
+
+eval $(thefuck --alias)
